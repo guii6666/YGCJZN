@@ -85,7 +85,7 @@ const ManualViewer: React.FC = () => {
       `}>
         <div className="p-6 border-b border-slate-100 bg-white">
           <div className="flex justify-between items-center mb-1">
-             <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Guidebook</span>
+             <span className="text-sm font-bold text-blue-600 uppercase tracking-wider">Guidebook</span>
              <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-slate-400 hover:text-slate-600">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
              </button>
@@ -104,7 +104,7 @@ const ManualViewer: React.FC = () => {
                 setActiveChapter(chapter);
                 if (window.innerWidth < 768) setIsSidebarOpen(false);
               }}
-              className={`w-full text-left px-4 py-3.5 rounded-xl text-sm transition-all duration-200 flex justify-between items-center group
+            className={`w-full text-left px-4 py-3.5 rounded-xl text-[15px] md:text-base transition-all duration-200 flex justify-between items-center group
                 ${activeChapter.id === chapter.id 
                   ? 'bg-blue-600 text-white shadow-md shadow-blue-200' 
                   : 'text-slate-600 hover:bg-slate-50 hover:text-blue-600'
@@ -121,7 +121,7 @@ const ManualViewer: React.FC = () => {
               setShowAerialPhoto(true);
               if (window.innerWidth < 768) setIsSidebarOpen(false);
             }}
-            className="w-full text-left px-4 py-3.5 rounded-xl text-sm transition-all duration-200 flex justify-between items-center group text-slate-600 hover:bg-slate-50 hover:text-indigo-600"
+            className="w-full text-left px-4 py-3.5 rounded-xl text-[15px] md:text-base transition-all duration-200 flex justify-between items-center group text-slate-600 hover:bg-slate-50 hover:text-indigo-600"
           >
             <div className="flex items-center">
                <Plane className="w-4 h-4 mr-2" />
@@ -200,9 +200,9 @@ const ManualViewer: React.FC = () => {
                 h2: ({node, ...props}) => <h3 className="text-xl md:text-2xl font-bold text-slate-900 mt-6 mb-3 pl-4 border-l-4 border-indigo-600" {...props} />,
                 h3: ({node, ...props}) => <h4 className="text-lg md:text-xl font-bold text-indigo-800 mt-5 mb-2 pl-3 border-l-4 border-indigo-400 bg-indigo-50/40 py-1 rounded" {...props} />,
                 ul: ({node, ...props}) => <ul className="list-disc list-outside ml-5 space-y-2 my-4 text-slate-600" {...props} />,
-                li: ({node, ...props}) => <li className="pl-1 leading-relaxed text-slate-700" {...props} />,
+                li: ({node, ...props}) => <li className="pl-1 leading-relaxed text-slate-700 text-[15px] md:text-[16px]" {...props} />,
                 strong: ({node, ...props}) => <strong className="font-bold text-indigo-700 bg-indigo-50 px-1.5 rounded" {...props} />,
-                p: ({node, ...props}) => <p className="leading-7 mb-4 text-slate-700" {...props} />,
+                p: ({node, ...props}) => <p className="leading-7 mb-4 text-slate-700 text-[15px] md:text-[16px]" {...props} />,
                 table: ({node, ...props}) => <div className="overflow-x-auto my-6 rounded-lg border border-slate-200"><table className="min-w-full divide-y divide-slate-200" {...props} /></div>,
                 thead: ({node, ...props}) => <thead className="bg-slate-50" {...props} />,
                 th: ({node, ...props}) => <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" {...props} />,
