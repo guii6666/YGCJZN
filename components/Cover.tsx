@@ -15,7 +15,7 @@ const Cover: React.FC<CoverProps> = ({ onStart }) => {
       <div className="relative z-30 pt-10 px-8 md:px-12 flex items-center space-x-4">
         {/* Replaced with Image Logo as requested */}
         <img 
-            src="/spic_logo_banner.png" 
+            src={`/spic_logo_banner.png?v=${new Date().getTime()}`} 
             alt="SPIC Logo" 
             className="h-16 md:h-20 w-auto object-contain"
             onError={(e) => {
