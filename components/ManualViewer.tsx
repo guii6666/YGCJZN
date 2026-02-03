@@ -4,8 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import { MANUAL_CHAPTERS, EMERGENCY_CONTACTS, FLIGHT_ROUTES } from '../constants';
 import { Chapter } from '../types';
 import { BookOpen, Menu, ChevronRight, Phone, ShieldAlert, User, HeartPulse, ShieldCheck, Briefcase, Plane, PlaneTakeoff, MoveRight, FileText, Download, ExternalLink, ImageOff } from 'lucide-react';
-
-// Custom Image Component with Error Handling
 const MarkdownImage = ({ src, alt, ...props }: any) => {
   const [error, setError] = useState(false);
 
@@ -198,8 +196,9 @@ const ManualViewer: React.FC = () => {
             {/* Custom renderer styling via prose class */}
             <ReactMarkdown
               components={{
-                h1: ({node, ...props}) => <h2 className="text-3xl md:text-4xl font-extrabold text-blue-800 mt-10 mb-5 tracking-tight" {...props} />,
-                h2: ({node, ...props}) => <h3 className="text-xl font-bold text-slate-900 mt-6 mb-3 pl-4 border-l-4 border-indigo-600" {...props} />,
+                h1: ({node, ...props}) => <h2 className="text-2xl md:text-3xl font-extrabold text-blue-800 mt-10 mb-5 tracking-tight" {...props} />,
+                h2: ({node, ...props}) => <h3 className="text-xl md:text-2xl font-bold text-slate-900 mt-6 mb-3 pl-4 border-l-4 border-indigo-600" {...props} />,
+                h3: ({node, ...props}) => <h4 className="text-lg md:text-xl font-bold text-indigo-800 mt-5 mb-2 pl-3 border-l-4 border-indigo-400 bg-indigo-50/40 py-1 rounded" {...props} />,
                 ul: ({node, ...props}) => <ul className="list-disc list-outside ml-5 space-y-2 my-4 text-slate-600" {...props} />,
                 li: ({node, ...props}) => <li className="pl-1 leading-relaxed text-slate-700" {...props} />,
                 strong: ({node, ...props}) => <strong className="font-bold text-indigo-700 bg-indigo-50 px-1.5 rounded" {...props} />,
