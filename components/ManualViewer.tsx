@@ -3,7 +3,41 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { MANUAL_CHAPTERS, EMERGENCY_CONTACTS, FLIGHT_ROUTES } from '../constants';
 import { Chapter } from '../types';
-import { BookOpen, Menu, ChevronRight, Phone, ShieldAlert, User, HeartPulse, ShieldCheck, Briefcase, Plane, PlaneTakeoff, MoveRight } from 'lucide-react';
+import { BookOpen, Menu, ChevronRight, Phone, ShieldAlert, User, HeartPulse, ShieldCheck, Briefcase, Plane, PlaneTakeoff, MoveRight, FileText, Download, ExternalLink, ImageOff } from 'lucide-react';
+
+// Custom Image Component with Error Handling
+const MarkdownImage = ({ src, alt, ...props }: any) => {
+  const [error, setError] = useState(false);
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-slate-50 border-2 border-dashed border-slate-200 rounded-lg text-slate-400 my-6">
+        <ImageOff className="w-10 h-10 mb-2 opacity-50" />
+        <p className="text-sm font-medium">图片加载失败</p>
+        <p className="text-xs mt-1 text-slate-400">{alt || 'Image not found'}</p>
+      </div>
+    );
+  }
+
+  return (
+    <figure className="my-8 group">
+      <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-sm">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          onError={() => setError(true)}
+          {...props}
+        />
+      </div>
+      {alt && (
+        <figcaption className="mt-3 text-center text-sm text-slate-500 font-medium px-4">
+          {alt}
+        </figcaption>
+      )}
+    </figure>
+  );
+};
 
 const ManualViewer: React.FC = () => {
   const [activeChapter, setActiveChapter] = useState<Chapter>(MANUAL_CHAPTERS[0]);
@@ -174,7 +208,40 @@ const ManualViewer: React.FC = () => {
                 thead: ({node, ...props}) => <thead className="bg-slate-50" {...props} />,
                 th: ({node, ...props}) => <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" {...props} />,
                 td: ({node, ...props}) => <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 border-t border-slate-100" {...props} />,
-                blockquote: ({node, ...props}) => <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-r-lg my-6 text-slate-700 italic flex items-start"><span className="text-yellow-400 text-2xl mr-2 leading-none">❝</span><div {...props}/></div>
+                blockquote: ({node, ...props}) => <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-r-lg my-6 text-slate-700 italic flex items-start"><span className="text-yellow-400 text-2xl mr-2 leading-none">❝</span><div {...props}/></div>,
+                a: ({node, href, children, ...props}) => {
+                  const isFile = href?.match(/\.(pdf|doc|docx|xls|xlsx|ppt|pptx|zip|rar|7z)$/i) || href?.startsWith('/files/');
+                  const isExternal = href?.startsWith('http');
+                
+                  if (isFile) {
+                    return (
+                      <a 
+                        href={href}
+                        className="inline-flex items-center gap-2 px-4 py-2 my-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 border border-slate-200 hover:border-blue-200 transition-colors no-underline group"
+                        download
+                        {...props}
+                      >
+                        <FileText size={16} className="text-slate-500 group-hover:text-blue-500" />
+                        <span className="font-medium">{children}</span>
+                        <Download size={14} className="text-slate-400 group-hover:text-blue-400 ml-auto" />
+                      </a>
+                    );
+                  }
+                  
+                  return (
+                    <a 
+                      href={href} 
+                      className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5"
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      {...props}
+                    >
+                      {children}
+                      {isExternal && <ExternalLink size={12} className="opacity-70" />}
+                    </a>
+                  );
+                },
+                img: MarkdownImage
               }}
             >
               {activeChapter.content}
